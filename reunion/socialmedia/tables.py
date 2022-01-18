@@ -48,9 +48,9 @@ def create_following():
 
 
 def create_post():
-    cur.execute("drop table posts");
+
     cur.execute('''
-        create table posts (
+        create table if not posts (
         post_id serial primary key,
         title char(100),
         description char(300),
