@@ -204,13 +204,9 @@ class Posts(APIView):
         conn.commit()
 
 
-        response = Response()
 
-        response.data ={
-            'post_id' : post_id
-        }
 
-        return response
+        return HttpResponse("Deleted")
 
     def get(self,request):
 
