@@ -15,14 +15,18 @@ cur = conn.cursor()
 
 
 def home(request):
-    return HttpResponse("bdhb")
+    return HttpResponse("Home")
 
 
 
 class Authenticate(APIView):
     def post(self,request):
-        email = request.data['email']
-        password = request.data['password']
+
+        try:
+            email = request.data['email']
+            password = request.data['password']
+        except:
+            return HttpResponse("check parameters")
 
         query = "select id from authenticate where email = %s and password = %s;"
         cur.execute(query,(email,password,))
@@ -52,12 +56,15 @@ class Authenticate(APIView):
 
 class FollowUser(APIView):
     def post(self,request):
-        token = request.COOKIES.get('jwt')
-        followingUserId = request.data['userid']
+        try:
+            token = request.COOKIES.get('jwt')
+            followingUserId = request.data['userid']
+        except:
+            return HttpResponse('check parameters')
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return HttpResponse("Error")
+            return HttpResponse("Expired - Login again")
 
         userId= payload['id']
 
@@ -71,12 +78,16 @@ class FollowUser(APIView):
 
 class UnFollowUser(APIView):
     def post(self,request):
-        token = request.COOKIES.get('jwt')
-        followingUserId = request.data['userid']
+
+        try:
+            token = request.COOKIES.get('jwt')
+            followingUserId = request.data['userid']
+        except:
+            return HttpResponse('check parameters')
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return HttpResponse("Error")
+            return HttpResponse("Expired - Login again")
 
         userId= payload['id']
 
@@ -96,7 +107,7 @@ class UserDetails(APIView):
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return HttpResponse("Error")
+            return HttpResponse("Expired - Login again")
 
         userId= payload['id']
 
@@ -128,16 +139,21 @@ class UserDetails(APIView):
 
 class Posts(APIView):
     def post(self,request):
-        token = request.COOKIES.get('jwt')
 
-        title = request.data['title']
-        desc = request.data['desc']
+        try:
+            token = request.COOKIES.get('jwt')
+
+            title = request.data['title']
+            desc = request.data['desc']
+        except:
+            return HttpResponse('check parameters')
+
         currenttime = datetime.datetime.utcnow()
 
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return HttpResponse("Error")
+            return HttpResponse("Expired - Login again")
 
         userId= payload['id']
 
@@ -160,15 +176,19 @@ class Posts(APIView):
         return response
 
     def delete(self,request):
-        token = request.COOKIES.get('jwt')
 
-        post_id = request.data['post_id']
+        try:
+            token = request.COOKIES.get('jwt')
+
+            post_id = request.data['post_id']
+        except:
+            return HttpResponse('check parameters')
 
 
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return HttpResponse("Error")
+            return HttpResponse("Expired - Login again")
 
         userId= payload['id']
 
@@ -186,14 +206,18 @@ class Posts(APIView):
         return response
 
     def get(self,request):
-        token = request.COOKIES.get('jwt')
 
-        post_id = request.data['post_id']
+        try:
+            token = request.COOKIES.get('jwt')
+
+            post_id = request.data['post_id']
+        except:
+            return HttpResponse('check parameters')
 
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return HttpResponse("Error")
+            return HttpResponse("Expired - Login again")
 
         userId= payload['id']
 
@@ -225,15 +249,20 @@ class Posts(APIView):
 
 class PostLike(APIView):
     def post(self,request):
-        token = request.COOKIES.get('jwt')
 
-        post_id = request.data['post_id']
+        try:
+            token = request.COOKIES.get('jwt')
+
+            post_id = request.data['post_id']
+
+        except:
+            return HttpResponse('check parameters')
 
 
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return HttpResponse("Error")
+            return HttpResponse("Expired - Login again")
 
         userId= payload['id']
 
@@ -242,20 +271,25 @@ class PostLike(APIView):
         conn.commit()
 
 
-        return HttpResponse("Success")
+        return HttpResponse("Liked")
 
 
 class PostUnLike(APIView):
     def post(self,request):
-        token = request.COOKIES.get('jwt')
 
-        post_id = request.data['post_id']
+        try:
+            token = request.COOKIES.get('jwt')
+
+            post_id = request.data['post_id']
+
+        except:
+            return HttpResponse('check parameters')
 
 
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return HttpResponse("Error")
+            return HttpResponse("Expired - Login again")
 
         userId= payload['id']
 
@@ -269,16 +303,21 @@ class PostUnLike(APIView):
 
 class Comment(APIView):
     def post(self,request):
-        token = request.COOKIES.get('jwt')
 
-        comment = request.data['comment']
-        post_id = request.data['post_id']
+        try:
+            token = request.COOKIES.get('jwt')
+
+            comment = request.data['comment']
+            post_id = request.data['post_id']
+
+        except:
+            return HttpResponse('check parameters')
 
 
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return HttpResponse("Error")
+            return HttpResponse("Expired - Login again")
 
         userId= payload['id']
 
@@ -305,7 +344,7 @@ class AllPost(APIView):
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return HttpResponse("Error")
+            return HttpResponse("Expired - Login again")
 
         userId= payload['id']
 
