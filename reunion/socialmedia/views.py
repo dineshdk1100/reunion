@@ -68,13 +68,20 @@ class FollowUser(APIView):
 
         userId= payload['id']
 
+        query = "select * from likes where following = %s and follower =%s;"
+        cur.execute(query, (userId,followingUserId,))
+        res = cur.fetchone()
+
+        if res != None:
+            return HttpResponse("You already following this user")
+
         query = "insert into followings (following,follower) values (%s, %s);"
         cur.execute(query,(userId,followingUserId,))
 
         conn.commit()
 
 
-        return HttpResponse('done')
+        return HttpResponse('followed')
 
 class UnFollowUser(APIView):
     def post(self,request):
@@ -360,7 +367,7 @@ class AllPost(APIView):
         query = '''
         select posts.post_id,posts.title,posts.description,posts.time,count(posts.post_id),comments.comment from 
         posts left outer join comments on posts.post_id=comments.post_id  left outer join likes on posts.post_id=likes.post_id
-        where posts.user_id = %s group by posts.post_id,comments.comment order by posts.time;'''
+        where posts.user_id = %s group by posts.post_id,comments.comment order by posts.time desc;'''
         cur.execute(query, (userId,))
         postdetails = cur.fetchall()
 
