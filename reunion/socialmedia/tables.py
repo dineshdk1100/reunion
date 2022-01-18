@@ -1,6 +1,8 @@
-import psycopg2
+import psycopg2,os
 
-conn = psycopg2.connect(database="reunion1", user="postgres", password="dinesh1100", host="localhost", port="5432")
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
 def insert_authenticate():
