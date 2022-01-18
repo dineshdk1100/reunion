@@ -20,11 +20,11 @@ def insert_authenticate():
 
 def create_authenticate():
 
-    cur.execute("drop table authenticate");
+
 
     cur.execute('''
 
-            create table authenticate (
+            create table if not exists authenticate (
                 Id serial primary key,
                 email char(50) not null,
                 password char(20) not null
@@ -35,12 +35,10 @@ def create_authenticate():
 
 
 def create_following():
-    cur.execute('''
-        drop table followings;
-    ''')
+
 
     cur.execute('''
-        create table followings (
+        create table if not exists followings (
             following int,
             follower int
         );
@@ -65,10 +63,10 @@ def create_post():
 
 
 def create_likes():
-    cur.execute('drop table likes');
+
 
     cur.execute('''
-        create table likes (
+        create table if not exists likes (
             post_id int,
             liked_by int,
             constraint fk_post_id foreign key(post_id) references posts(post_id) on delete cascade
@@ -80,9 +78,9 @@ def create_likes():
 
 
 def create_comments():
-    cur.execute("drop table comments");
+
     cur.execute('''
-        create table comments (
+        create table if not exists comments (
             c_id serial primary key,
             comment char(100),
             post_id int,
