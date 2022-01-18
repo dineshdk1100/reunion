@@ -360,11 +360,11 @@ class AllPost(APIView):
 
 def create(request):
 
-    # create_authenticate()
-    # insert_authenticate()
-    # create_following()
-    # create_post()
-    # create_likes()
-    # create_comments()
+    create_authenticate()
+    insert_authenticate()
+    create_following()
+    create_post()
+    create_likes()
+    create_comments()
 
     return HttpResponse('done')
