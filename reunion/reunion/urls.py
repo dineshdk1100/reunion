@@ -17,6 +17,6 @@ from django.contrib import admin
 from django.urls import path,include
 
 urlpatterns = [
-    path('',include('socialmedia.urls')),
+    path('',include('reunion.socialmedia.urls')),
     path('admin/', admin.site.urls)
 ]
