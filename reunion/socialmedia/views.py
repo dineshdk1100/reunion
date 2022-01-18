@@ -266,6 +266,13 @@ class PostLike(APIView):
 
         userId= payload['id']
 
+        query = "select * from likes where post_id = %s and liked_by =%s;"
+        cur.execute(query, (post_id, userId))
+        res = cur.fetchone()
+
+        if res !=None:
+            return HttpResponse("You already Liked")
+
         query = "insert into likes(post_id,liked_by) values (%s,%s);"
         cur.execute(query,(post_id,userId))
         conn.commit()
