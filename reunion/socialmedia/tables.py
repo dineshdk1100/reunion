@@ -50,7 +50,7 @@ def create_following():
 def create_post():
 
     cur.execute('''
-        create table if not posts (
+        create table if not exists posts (
         post_id serial primary key,
         title char(100),
         description char(300),
