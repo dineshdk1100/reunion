@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'reunion.urls'
+ROOT_URLCONF = 'reunion.reunion.urls'
 
 TEMPLATES = [
     {
