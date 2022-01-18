@@ -68,7 +68,7 @@ class FollowUser(APIView):
 
         userId= payload['id']
 
-        query = "select * from likes where following = %s and follower =%s;"
+        query = "select * from followings where following = %s and follower =%s;"
         cur.execute(query, (userId,followingUserId,))
         res = cur.fetchone()
 
