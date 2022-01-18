@@ -367,4 +367,4 @@ def create(request):
     create_likes()
     create_comments()
 
-    return HttpResponse('done')
+    return HttpResponse('Tables created')
